@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
 import {
-  search, searchAlbums, searchTracks, searchPlayLists, searchArtist,
+  search, searchAlbums, searchTracks, searchPlayLists, searchArtists,
 } from '../src/main';
 
 global.fetch = require('node-fetch');
@@ -32,8 +32,8 @@ describe('Spotify Wrapper', () => {
     it('should exist the search method', () => {
       expect(search).to.exist;
     });
-    it('should exist the searchArtist method', () => {
-      expect(searchArtist).to.exist;
+    it('should exist the searchArtists method', () => {
+      expect(searchArtists).to.exist;
     });
     it('should exist the searchAlbums method', () => {
       expect(searchAlbums).to.exist;
@@ -76,6 +76,71 @@ describe('Spotify Wrapper', () => {
         const artists = search('Incubus', 'artist');
         expect(artists.resolveValue).to.be.eql({ body: 'json' }); // É um equal só que Deep in
       });
+    });
+  });
+
+  describe('searchArtists', () => {
+    it('should call fetch function', () => {
+      const artists = searchArtists('Incubus');
+      expect(fetchedStub).to.have.been.calledOnce;
+    });
+    it('should call fetch with the correct URL', () => {
+      const artists = searchArtists('Incubus');
+      expect(fetchedStub).to.have.been.calledWith(
+        'https://api.spotify.com/v1/search?query=Incubus&type=artist',
+      );
+      const artists2 = searchArtists('Muse');
+      expect(fetchedStub).to.have.been.calledWith(
+        'https://api.spotify.com/v1/search?query=Muse&type=artist',
+      );
+    });
+  });
+  describe('searchAlbums', () => {
+    it('should call fetch function', () => {
+      const artists = searchAlbums('Incubus');
+      expect(fetchedStub).to.have.been.calledOnce;
+    });
+    it('should call fetch with the correct URL', () => {
+      const artists = searchAlbums('Incubus');
+      expect(fetchedStub).to.have.been.calledWith(
+        'https://api.spotify.com/v1/search?query=Incubus&type=album',
+      );
+      const artists2 = searchAlbums('Muse');
+      expect(fetchedStub).to.have.been.calledWith(
+        'https://api.spotify.com/v1/search?query=Muse&type=album',
+      );
+    });
+  });
+  describe('searchTracks', () => {
+    it('should call fetch function', () => {
+      const artists = searchTracks('Incubus');
+      expect(fetchedStub).to.have.been.calledOnce;
+    });
+    it('should call fetch with the correct URL', () => {
+      const artists = searchTracks('Incubus');
+      expect(fetchedStub).to.have.been.calledWith(
+        'https://api.spotify.com/v1/search?query=Incubus&type=tracks',
+      );
+      const artists2 = searchTracks('Muse');
+      expect(fetchedStub).to.have.been.calledWith(
+        'https://api.spotify.com/v1/search?query=Muse&type=tracks',
+      );
+    });
+  });
+  describe('searchPlayLists', () => {
+    it('should call fetch functon', () => {
+      const artists = searchPlayLists('Incubus');
+      expect(fetchedStub).to.have.been.calledOnce;
+    });
+    it('should call fetch with the URL', () => {
+      const artists = searchPlayLists('Incubus');
+      expect(fetchedStub).to.have.been.calledWith(
+        'https://api.spotify.com/v1/search?query=Incubus&type=playlist',
+      );
+      const artists2 = searchPlayLists('Muse');
+      expect(fetchedStub).to.have.been.calledWith(
+        'https://api.spotify.com/v1/search?query=Muse&type=playlist',
+      );
     });
   });
 });

@@ -8,8 +8,8 @@
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --write '*.js'",
     "format-code": "npm run prettier && npm run lint:fix",
-    "test": "./node_modules/.bin/mocha tests/**/*.spec.js --require babel-register",
-    "test:tdd": "./node_modules/.bin/mocha tests/**/*.spec.js --require babel-register --watch",
+    "test": "./node_modules/.bin/mocha tests/**/*.spec.js --require @babel/register",
+    "test:tdd": "./node_modules/.bin/mocha tests/**/*.spec.js --require @babel/register --watch",
     "test:coverage": "nyc npm test"
   },
   "nyc": {
@@ -41,15 +41,18 @@
   },
   "homepage": "https://github.com/jeftarmascarenhas/wrapper-spotify-api#readme",
   "devDependencies": {
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/register": "^7.4.4",
     "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
     "chai": "^4.2.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.3",
     "husky": "^2.4.1",
     "mocha": "^6.1.4",
-    "node-fetch": "^2.6.0",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "sinon": "^7.3.2",
@@ -59,5 +62,8 @@
     "hooks": {
       "pre-push": "npm run format-code && npm run test:coverage"
     }
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0"
   }
 }
